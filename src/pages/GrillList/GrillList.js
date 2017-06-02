@@ -1,27 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import TableOfGrills from '../../components/TableOfGrills/TableOfGrills';
 
 class GrillList extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = { grills: [] };
-    this.loadGrills = this.loadGrills.bind(this);
-  }
-
-  componentWillMount() {
-    this.loadGrills();
-  }
-
-  loadGrills() {
-    fetch('http://localhost:3000/api/grills/')
-      .then((response) => response.json())
-      .then((data) => this.setState({ grills:data }));
-  }
-
   render() {
-    const { grills } = this.state;
+    const { grills } = this.props;
 
     return (
       <div>
@@ -32,4 +17,8 @@ class GrillList extends Component {
   }
 }
 
-export default GrillList;
+const mapStateToProps = (store) => ({
+  grills: store.grills
+});
+
+export default connect(mapStateToProps)(GrillList);
